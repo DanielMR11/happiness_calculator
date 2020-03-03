@@ -28,10 +28,17 @@ class EntryListTableViewController: UITableViewController {
         {return UITableViewCell()}
         let entry = EntryController.entries[indexPath.row]
         cell.setEntry(entry: entry, avergeHappiness: 0)
+        
+        cell.delegate = self
 
         // Configure the cell...
 
         return cell
     }
+}
 
+extension EntryListTableViewController: EntryTableViewCellDelegate {
+    func switchToggledOnCell(cell: EntryCellTableViewCell) {
+        print("Cell was tapped")
+    }
 }
