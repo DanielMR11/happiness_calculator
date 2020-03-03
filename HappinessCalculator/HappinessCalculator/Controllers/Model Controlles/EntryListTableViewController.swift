@@ -7,10 +7,16 @@
 //
 
 import UIKit
-
+let notificationKey = Notification.Name(rawValue: "didChangeHappinnes")
 class EntryListTableViewController: UITableViewController {
     
-    var averageHappiness: Int = 0
+    var averageHappiness: Int = 0 {
+        //Propertie Observer
+        didSet {
+            NotificationCenter.default.post(name: notificationKey, object: self.averageHappiness)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -50,7 +56,7 @@ class EntryListTableViewController: UITableViewController {
 
 extension EntryListTableViewController: EntryTableViewCellDelegate {
     func switchToggledOnCell(cell: EntryCellTableViewCell) {
-        guard let indexPath = tableView.indexPath(for: cell), let entry = cell.entry else {return}
+        guard let entry = cell.entry else {return}
         EntryController.updateEntry(entry: entry)
         updatAverageHappiness()
         cell.updateUi(averageHappiness: averageHappiness)
